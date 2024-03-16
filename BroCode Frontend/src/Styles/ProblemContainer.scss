@@ -1,0 +1,50 @@
+.ProblemContainer {
+    padding-top: 50px;
+    padding-inline: 100px;
+    width: 100%;
+    min-height: 100vh;
+    >.problemTopics {
+        margin-top: 20px;
+        // border: 1px solid yellow;
+        overflow-x: auto;
+        display: flex;
+        padding-block: 10px;
+        &::-webkit-scrollbar {
+            height: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #ffd471;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 10px;
+        }
+        button {
+            padding-inline: 10px;
+            margin-inline: 5px;
+            border-radius: 5px;
+            padding-block: 3px;
+            cursor: pointer;
+            // color: white;
+            // background: url('https://i.gifer.com/2MdY.gif');
+            // border: none;
+            // background-size: auto;
+            // background-position: center;
+        }
+    }
+    >h1 {
+        margin-block: 20px;
+        >span {
+            background: url('https://i.gifer.com/1yjZ.gif');
+            color: transparent;
+            background-clip: text;
+            background-position: 80%;
+        }
+    }
+    >.problemListContainer {
+        width: 100%;
+        // border: 1px solid red;
+        padding-block: 20px;
+    }
+}

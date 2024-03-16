@@ -1,0 +1,53 @@
+.ProblemCard {
+    border: 1px solid rgb(42, 42, 42);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 10px;
+    padding-inline: 20px;
+    &:nth-child(even) {
+        background: rgb(42, 42, 42);
+    }
+    >.statusName {
+        display: flex;
+        align-items: center;
+        >svg {
+            margin-right: 10px;
+        }
+        >.not {
+            color: red;
+        }
+        >.yes {
+            color: rgb(21, 255, 0);
+        }
+    }
+    >button {
+        border-radius: 5px;
+        padding-inline: 12px;
+        padding-block: 4px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        // font-weight: 500;
+        transition: all 0.3s;
+        svg {
+            margin-left: 5px;
+            // font-size: 18px;
+            transform: rotate(-30deg);
+            transition: transform 0.2s;
+        }
+        &:hover {
+            background: rgb(115, 254, 115) !important;
+            svg {
+                transform: rotate(0deg);
+            }
+        }
+    }
+    &:hover {
+        border: 1px solid rgb(70, 69, 69);
+        button {
+            background: #ffc778;
+        }
+    }
+}
