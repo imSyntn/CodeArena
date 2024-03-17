@@ -9,13 +9,13 @@ const Header = () => {
       contest: false,
     })
     useLayoutEffect(()=>{
-      let path = window.location.pathname
-      if(path === '/Problems') setSelected({
+      let path = window.location.pathname.split('/')[1]
+      if(path === 'Problems') setSelected({
           home: false,
           problems: true,
           contest: false,
         })
-      if(path === '/Contest') setSelected({
+      if(path === 'Contest') setSelected({
           home: false,
           problems: false,
           contest: true,
@@ -28,7 +28,7 @@ const Header = () => {
               home: true,
               problems: false,
               contest: false,
-            })}>BroCode</h2></Link>
+            })}>CodeArena</h2></Link>
             <Link to='/Problems'><p className={selected.problems ? 'selected' : ''} onClick={()=> setSelected({
               home: false,
               problems: true,

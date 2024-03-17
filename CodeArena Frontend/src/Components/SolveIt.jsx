@@ -4,12 +4,15 @@ import { useParams } from 'react-router-dom'
 import CodeEditor from './CodeEditor'
 import Output from './Output'
 import { Buffer } from 'buffer'
+import Confetti from './Confetti'
 
 
 const SolveIt = () => {
 
   const { id } = useParams()
+  const [correct, setCorrect] = useState(false)
   const [token, setToken] = useState(false)
+  const [quesDetails, setQuesDetails] = useState(false)
   const [io, setIo] = useState({
     input: 'console.log("Hello World!")',
     output: 'Run the code to see the output.'
@@ -22,6 +25,20 @@ const SolveIt = () => {
   const decode = (str) => {
     return Buffer.from(str, 'base64').toString()
   }
+
+  useEffect(() => {
+    const getQues = async () => {
+      try {
+        const req = await fetch(`http://localhost:8000/Questions/${id}`)
+        const res = await req.json()
+        setQuesDetails(res)
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getQues()
+  }, [])
 
   const postCode = async () => {
     setIo(prev => ({
@@ -76,7 +93,7 @@ const SolveIt = () => {
       const res = await req.json()
       // console.log(res)
       // const output = decode(res.stdout ? res.stdout : '');
-      const output = decode(res.stdout ? res.stdout :'').replace('\n', '')
+      const output = decode(res.stdout ? res.stdout : '').replace('\n', '')
       // console.log(res, output)
       const compile_output = decode(res.compile_output ? res.compile_output : '');
       const error = decode(res.stderr ? res.stderr : '');
@@ -97,14 +114,18 @@ const SolveIt = () => {
             output: final_output
           }))
         }
-      }
-      else {
+      } else {
         final_output = output;
         console.log(final_output)
         setIo(prev => ({
           ...prev,
           output: final_output
         }))
+        // if(final_output !== quesDetails.Example.FinalOutputOutput) {
+        //   console.log(quesDetails.Example.FinalOutput, final_output, 'Wrong')
+        // } else {
+        //   console.log('Right')
+        // }
       }
 
     } catch (error) {
@@ -112,18 +133,51 @@ const SolveIt = () => {
     }
   }
 
+  const showConfettie = () => {
+    setCorrect(true)
+    setTimeout(() => {
+      setCorrect(false)
+    }, 3000)
+  }
+
 
   return (
-    <div className='SolveIt'>
-      <div className="left">
-        Solve
-      </div>
-      <div className="right">
-        <CodeEditor io={io} setIo={setIo} />
-        <button onClick={() => postCode()}>Run</button>
-        <Output io={io}/>
-      </div>
-    </div>
+    <>
+      {
+        correct && <Confetti />
+      }
+      {
+        quesDetails ? (
+          <div className='SolveIt'>
+            <div className="left">
+              <h2>{quesDetails.id}.{quesDetails.question}</h2>
+              <div className="type">
+                <p>{quesDetails.difficulty}</p>
+                {
+                  quesDetails.topic.map((item, index) => (
+                    <p key={index}>{item}</p>
+                  ))
+                }
+              </div>
+              <p className="descriptiion">{quesDetails.description}</p>
+              <h3 className='example'>Example:</h3>
+              <div className="exampleDiv">
+                <h4>Input: <span>{quesDetails.Example.Input}</span></h4>
+                <h4>Output: <span>{quesDetails.Example.FinalOutput}</span></h4>
+                <h4>Explanation: <span>{quesDetails.Example.Explanation}</span></h4>
+              </div>
+              <p className='oktxt'>If Your output is same then click on Correct.</p>
+              <button onClick={showConfettie}>Correct</button>
+            </div>
+            <div className="right">
+              <CodeEditor io={io} setIo={setIo} />
+              <button onClick={() => postCode()}>Run</button>
+              <Output io={io} />
+            </div>
+          </div>
+        ) : <h1 className='Loading'>Loading...</h1>
+      }
+    </>
   )
 }
 

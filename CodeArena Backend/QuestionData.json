@@ -1,0 +1,70 @@
+{
+    "Questions": [
+      {
+        "id": 1,
+        "question": "Two Sum",
+        "difficulty": "Easy",
+        "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+        "Example": {
+            "Input": "nums = [2,7,11,15], target = 9",
+            "Output": [0,1],
+            "FinalOutput": "[0,1]",
+            "Explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+        },
+        "topic": ["Array"]
+      },
+      {
+        "id": 2,
+        "question": "Valid Palindrome",
+        "difficulty": "Easy",
+        "description": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
+        "Example": {
+            "Input": "Level",
+            "Output": true,
+            "FinalOutput": "true",
+            "Explanation": "'level' is a palindrome."
+        },
+        "topic": ["String"]
+      },
+      {
+        "id": 3,
+        "question": "Sort The Array",
+        "difficulty": "Easy",
+        "description": "Sort the given array in ascending order.",
+        "Example": {
+            "Input": "[0,3,5,4,2,6,1,9,7,8]",
+            "Output": [0,1,2,3,4,5,6,7,8,9],
+            "FinalOutput": "[0,1,2,3,4,5,6,7,8,9]",
+            "Explanation": "Sorted Array should be [0,1,2,3,4,5,6,7,8,9] so that  (a,b)=> a-b"
+        },
+        "topic": ["Array", "Sorting"]
+      },
+      {
+        "id": 4,
+        "question": "Index",
+        "difficulty": "Easy",
+        "description": "Return The index of 6",
+        "Example": {
+            "Input": "[1,8,6,9,5]",
+            "Output": 2,
+            "FinalOutput": "2",
+            "Explanation": "The index of 6 is 2."
+        },
+        "topic": ["Array", "Searching"]
+      },
+      {
+        "id": 5,
+        "question": "Factorial",
+        "difficulty": "Easy",
+        "description": "The factorial of n, denoted as n!, is the product of all positive integers less than or equal to n. For example, 5! = 5 * 4 * 3 * 2 * 1 = 120.",
+        "Example": {
+            "Input": 5,
+            "Output": 120,
+            "FinalOutput": "120",
+            "Explanation": "The factorial of n, denoted as n!, is the product of all positive integers less than or equal to n. For example, 5! = 5 * 4 * 3 * 2 * 1 = 120."
+        },
+        "topic": ["Recursion"]
+      }
+    ]
+  }
+  

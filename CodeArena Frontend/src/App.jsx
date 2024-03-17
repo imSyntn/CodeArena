@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './Components/Header'
@@ -11,6 +11,14 @@ export const topicContext = createContext()
 function App() {
   const [selectedTopic, setSelectedTopic] = useState('All')
 
+  useEffect(()=>{
+    window.addEventListener('resize',()=> {
+      if(window.innerWidth<800) {
+        alert('Use a Laptop...')
+      }
+    })
+  },[])
+
   return (
     <BrowserRouter>
       <topicContext.Provider value={{selectedTopic, setSelectedTopic}}>
@@ -18,7 +26,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Problems' element={<ProblemContainer />} />
-          <Route path='/Problem/:id' element={<SolveIt />} />
+          <Route path='/Problems/:id' element={<SolveIt />} />
         </Routes>
       </topicContext.Provider>
     </BrowserRouter>

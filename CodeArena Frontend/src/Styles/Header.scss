@@ -18,6 +18,13 @@ header {
         width: 400px;
         align-items: center;
         justify-content: space-between;
+        h2 {
+            // background: url('https://i.gifer.com/VYM4.gif');
+            background: url('https://i.gifer.com/fxVD.gif');
+            color: transparent;
+            background-clip: text;
+            background-position: 39.3%;
+        }
         p {
             cursor: pointer;
         }
