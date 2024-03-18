@@ -5,6 +5,8 @@ import Header from './Components/Header'
 import Home from './Components/Home'
 import ProblemContainer from './Components/ProblemContainer'
 import SolveIt from './Components/SolveIt'
+import Contest from './Components/Contest'
+import PageNotExist from './Components/PageNotExist'
 
 export const topicContext = createContext()
 
@@ -27,6 +29,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/Problems' element={<ProblemContainer />} />
           <Route path='/Problems/:id' element={<SolveIt />} />
+          <Route path='/Contest' element={<Contest />} />
+          <Route path='*' element={<PageNotExist />} />
         </Routes>
       </topicContext.Provider>
     </BrowserRouter>
