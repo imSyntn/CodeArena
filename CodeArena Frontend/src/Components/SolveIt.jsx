@@ -6,11 +6,13 @@ import Output from './Output'
 import { Buffer } from 'buffer'
 import Confetti from './Confetti'
 
-
 const SolveIt = () => {
 
   const { id } = useParams()
   const [correct, setCorrect] = useState(false)
+  const [name, setName] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [timeTaken, setTimeTaken] = useState('_')
   const [token, setToken] = useState(false)
   const [quesDetails, setQuesDetails] = useState(false)
   const [io, setIo] = useState({
@@ -32,7 +34,6 @@ const SolveIt = () => {
         const req = await fetch(`http://localhost:8000/Questions/${id}`)
         const res = await req.json()
         setQuesDetails(res)
-        console.log(res)
       } catch (error) {
         console.log(error)
       }
@@ -41,6 +42,7 @@ const SolveIt = () => {
   }, [])
 
   const postCode = async () => {
+    setTimeTaken('_')
     setIo(prev => ({
       ...prev,
       output: 'Testing your code...'
@@ -70,16 +72,10 @@ const SolveIt = () => {
   }
 
   useEffect(() => {
-    // console.log(token)
     token && setTimeout(() => {
       getOutput(token)
     }, 2000)
   }, [token])
-
-  // setTimeout(()=> {
-  //   // getOutput(token)
-  //   console.log(decode('SGVsbG8gV29ybGQhCg==\n'))
-  // }, 2000)
 
   const getOutput = async (token) => {
     try {
@@ -91,16 +87,15 @@ const SolveIt = () => {
         }
       })
       const res = await req.json()
-      // console.log(res)
+      const time = new Date(res.finished_at) - new Date(res.created_at)
+      setTimeTaken(time)
       // const output = decode(res.stdout ? res.stdout : '');
       const output = decode(res.stdout ? res.stdout : '').replace('\n', '')
-      // console.log(res, output)
       const compile_output = decode(res.compile_output ? res.compile_output : '');
       const error = decode(res.stderr ? res.stderr : '');
 
       let final_output = '';
       if (res.status_id !== 3) {
-        // our code have some error
         if (compile_output === "") {
           final_output = error;
           setIo(prev => ({
@@ -116,7 +111,6 @@ const SolveIt = () => {
         }
       } else {
         final_output = output;
-        console.log(final_output)
         setIo(prev => ({
           ...prev,
           output: final_output
@@ -140,11 +134,42 @@ const SolveIt = () => {
     }, 3000)
   }
 
+  const postSubmitResuest = async () => {
+    console.log('postSubmitResuest')
+    try {
+      const req = await fetch('http://localhost:8000/contestAdd', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          time: timeTaken
+        })
+      })
+      const res = await req.json()
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <>
       {
         correct && <Confetti />
+      }
+      {
+        showModal && (
+          <div className='nameReq'>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <button onClick={() => {
+              setShowModal(false)
+              postSubmitResuest()
+            }}>Close</button>
+          </div>
+        )
       }
       {
         quesDetails ? (
@@ -168,6 +193,16 @@ const SolveIt = () => {
               </div>
               <p className='oktxt'>If Your output is same then click on Correct.</p>
               <button onClick={showConfettie}>Correct</button>
+              {
+                <p className='timeTaken'>Time Taken: {timeTaken}ms</p>
+              }
+              {
+                (timeTaken !== '_') && <button onClick={() => {
+                  (name == '') ? (setShowModal(true)) : (
+                    postSubmitResuest()
+                  )
+                }}>Submit</button>
+              }
             </div>
             <div className="right">
               <CodeEditor io={io} setIo={setIo} />

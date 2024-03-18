@@ -1,12 +1,12 @@
-import { useState, createContext, useEffect } from 'react'
+import { useState, createContext, useEffect, lazy, Suspense } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './Components/Header'
 import Home from './Components/Home'
-import ProblemContainer from './Components/ProblemContainer'
-import SolveIt from './Components/SolveIt'
-import Contest from './Components/Contest'
-import PageNotExist from './Components/PageNotExist'
+const ProblemContainer = lazy(()=> import('./Components/ProblemContainer'))
+const SolveIt = lazy(()=> import('./Components/SolveIt'))
+const Contest = lazy(()=> import('./Components/Contest'))
+const PageNotExist = lazy(()=> import('./Components/PageNotExist'))
 
 export const topicContext = createContext()
 
@@ -27,10 +27,10 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/Problems' element={<ProblemContainer />} />
-          <Route path='/Problems/:id' element={<SolveIt />} />
-          <Route path='/Contest' element={<Contest />} />
-          <Route path='*' element={<PageNotExist />} />
+          <Route path='/Problems' element={<Suspense><ProblemContainer /></Suspense>} />
+          <Route path='/Problems/:id' element={<Suspense><SolveIt /></Suspense>} />
+          <Route path='/Contest' element={<Suspense><Contest /></Suspense>} />
+          <Route path='*' element={<Suspense><PageNotExist /></Suspense>} />
         </Routes>
       </topicContext.Provider>
     </BrowserRouter>

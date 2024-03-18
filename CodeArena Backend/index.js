@@ -52,5 +52,9 @@ app.post('/contestAdd', async(req, res)=> {
         res.status(200).json(addData)
     }
 })
+app.get('/contestResults', async(req,res)=> {
+    const result = await Model.find({})
+    res.status(200).send(result)
+})
 
 app.listen(8000, ()=> console.log('Server Started...'))

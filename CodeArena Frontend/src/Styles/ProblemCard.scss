@@ -14,7 +14,8 @@
         align-items: center;
         >svg {
             margin-right: 10px;
-            color: rgb(116, 117, 41);
+            color: rgb(93, 95, 0);
+            transition: all 0.2s;
         }
         // >.not {
         //     color: red;
@@ -56,7 +57,14 @@
     &:hover {
         border: 1px solid rgb(70, 69, 69);
         button {
-            background: #ffc778;
+            background: #ffbe64;
+        }
+        .statusName {
+            svg {
+                // margin-right: 10px;
+                color: rgb(200, 203, 0);
+                // color: white;
+            }
         }
     }
 }

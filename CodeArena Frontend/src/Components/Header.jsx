@@ -41,9 +41,10 @@ const Header = () => {
             })}>Contest</p></Link>
         </div>
         <div className="right">
-            <button>Sign Up</button>
+          <button onClick={()=> alert('Only Submit if your output is same as the example.')}>Alert</button>
+            {/* <button>Sign Up</button>
             <p>or</p>
-            <button>Login</button>
+            <button>Login</button> */}
         </div>
     </header>
   )
