@@ -1,9 +1,20 @@
 const express = require('express')
 const app = express();
 const cors = require('cors')
+
+const {createServer} = require('http')
+const {Server} = require('socket.io')
+
 const mongoose = require('mongoose')
 const { Topics } = require('./Topics.json')
 const { Questions } = require('./QuestionData.json')
+
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
+    cors: {
+        origin: true
+    }
+})
 
 mongoose.connect('mongodb://127.0.0.1:32768/CodeArena').then(()=> console.log('MongoDB Connected'))
 
@@ -57,4 +68,26 @@ app.get('/contestResults', async(req,res)=> {
     res.status(200).send(result)
 })
 
-app.listen(8000, ()=> console.log('Server Started...'))
+io.on('connection', (socket)=> {
+    console.log(`${socket.id} has connected`)
+    socket.broadcast.emit( 'other-connected' ,`${socket.id} just connected.`)
+
+    const count = io.engine.clientsCount;
+    io.emit('liveConnected', `${count} people live.`)
+
+    socket.on('disconnect', ()=> {
+        console.log(`${socket.id} has disconnected.`)
+        socket.broadcast.emit('other-disconnected', `${socket.id} has disconnected.`)
+
+        const count = io.engine.clientsCount;
+        io.emit('liveConnected', `${count} people live.`)
+    })
+
+    socket.on('sendMessage', (e)=> {
+        io.to(e.roomId).emit('receiveMessage', `${e.message}`)
+    })
+
+
+})
+
+httpServer.listen(8000, ()=> console.log('Server Started...'))

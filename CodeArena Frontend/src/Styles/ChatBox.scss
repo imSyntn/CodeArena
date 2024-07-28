@@ -1,0 +1,48 @@
+.ChatBox {
+    width: 300px;
+    height: calc(100vh - 50px);
+    background: gray;
+    position: absolute;
+    top: 50px;
+    right: 0;
+
+    >button {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        background: none;
+        border: 2px solid white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        >svg {
+            font-size: 30px;
+            color: white;
+        }
+    }
+    >.roomInput, .sendMessage {
+        // border: 1px solid red;
+        margin-block: 5px;
+        input, button {
+            height: 35px;
+        }
+        input {
+            margin-right: 10px;
+            // font-size: 16px;
+        }
+    }
+    .chats {
+        height: calc(100% - 90px);
+        width: 100%;
+        background: orangered;
+    }
+    >.sendMessage {
+        input {
+            width: 250px;
+        }
+    }
+}

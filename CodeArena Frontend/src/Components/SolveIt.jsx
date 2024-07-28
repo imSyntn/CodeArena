@@ -6,6 +6,9 @@ import Output from './Output'
 import { Buffer } from 'buffer'
 import Confetti from './Confetti'
 
+import { IoMdChatboxes } from "react-icons/io";
+import ChatBox from './ChatBox'
+
 const SolveIt = () => {
 
   const { id } = useParams()
@@ -19,6 +22,8 @@ const SolveIt = () => {
     input: 'console.log("Hello World!")',
     output: 'Run the code to see the output.'
   })
+
+  const [openChat, setOpenChat] = useState(false)
 
   const encode = (str) => {
     return Buffer.from(str, "binary").toString("base64")
@@ -87,6 +92,7 @@ const SolveIt = () => {
         }
       })
       const res = await req.json()
+      console.log(res)
       const time = new Date(res.finished_at) - new Date(res.created_at)
       setTimeTaken(time)
       // const output = decode(res.stdout ? res.stdout : '');
@@ -163,7 +169,7 @@ const SolveIt = () => {
       {
         showModal && (
           <div className='nameReq'>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="text" value={name} placeholder='Enter your name' onChange={(e) => setName(e.target.value)} />
             <button onClick={() => {
               setShowModal(false)
               postSubmitResuest()
@@ -211,6 +217,13 @@ const SolveIt = () => {
             </div>
           </div>
         ) : <h1 className='Loading'>Loading...</h1>
+      }
+      {
+        openChat ? (
+          <ChatBox setOpenChat={setOpenChat} />
+        ) : (
+          <button className='openChatBtn' onClick={()=> setOpenChat(true)}><IoMdChatboxes /></button>
+        )
       }
     </>
   )
